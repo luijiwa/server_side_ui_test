@@ -26,7 +26,7 @@ dev_dependencies:
   # Testing
   flutter_test:
     sdk: flutter
-  mockito: ^5.4.5
+  mockito: ^5.4.6
   build_runner: ^2.4.14
 
 flutter:

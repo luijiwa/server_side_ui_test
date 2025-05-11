@@ -11,7 +11,7 @@ void main() {
       final controller = TestWidgetController(widgetTester);
 
       await controller.pumpWidget(
-        const HomeScreen(),
+        const Test(),
         dependencies: const HomeScreenDependenciesContainer(),
       );
 

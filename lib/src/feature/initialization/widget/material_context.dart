@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizzle_starter/src/core/common/app_navigator.dart';
 import 'package:sizzle_starter/src/core/constant/localization/localization.dart';
 import 'package:sizzle_starter/src/feature/home/widget/home_screen.dart';
 import 'package:sizzle_starter/src/feature/settings/model/app_theme.dart';
@@ -19,6 +20,8 @@ class MaterialContext extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final preserveKey = GlobalKey<State<StatefulWidget>>();
+
     final settings = SettingsScope.settingsOf(context);
     final mediaQueryData = MediaQuery.of(context);
 
@@ -28,6 +31,19 @@ class MaterialContext extends StatelessWidget {
 
     final themeMode = theme.themeMode;
 
+    // @override
+    // Widget build(BuildContext context) => MaterialApp(
+    //   title: 'Declarative Navigation',
+    //   debugShowCheckedModeBanner: false,
+    //   builder:
+    //       (context, _) => AppNavigator(
+    //         key: preserveKey,
+    //         pages: const [MaterialPage<void>(child: HomeScreen())],
+    //         guards: [
+    //           (pages) => pages.length > 1 ? pages : [const MaterialPage(child: HomeScreen())],
+    //         ],
+    //       ),
+    // );
     return MaterialApp(
       theme: lightTheme,
       darkTheme: darkTheme,
@@ -35,7 +51,6 @@ class MaterialContext extends StatelessWidget {
       locale: settings.locale,
       localizationsDelegates: Localization.localizationDelegates,
       supportedLocales: Localization.supportedLocales,
-      home: const HomeScreen(),
       builder:
           (context, child) => MediaQuery(
             key: _globalKey,
@@ -44,7 +59,10 @@ class MaterialContext extends StatelessWidget {
                 mediaQueryData.textScaler.scale(settings.textScale ?? 1).clamp(0.5, 2),
               ),
             ),
-            child: child!,
+            child: AppNavigator(
+              key: preserveKey,
+              pages: const [MaterialPage<void>(child: HomeScreen())],
+            ),
           ),
     );
   }
